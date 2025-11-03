@@ -1,0 +1,9 @@
+To start server --------->
+cd .\server\ 
+ npm i
+ npm install dotenv 
+ node .\index.js 
+
+
+ To start frontend localhost ------>
+ npm run dev
