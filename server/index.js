@@ -1,26 +1,25 @@
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load .env variables
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 // Allow only your frontend origin
 app.use(cors({
-  origin: ["http://localhost:5173", "https://your-frontend-domain.com"],
+  origin: ["http://localhost:5173", "https://swiggy-clone-gules.vercel.app"],
   methods: ["GET"],
 }));
 
 app.get("/api/proxy", async (req, res) => {
+  console.log("🔍 Incoming proxy request:", req.query);
   const targetUrl = decodeURIComponent(req.query.url || "");
-  // const token = req.query.token;
   const token = req.query.token?.trim();
-const secret = process.env.SERVER_SECRET?.trim();
+  const secret = process.env.SERVER_SECRET?.trim();
+
   // ✅ Verify secret token
-  if (token !== process.env.SERVER_SECRET) {
+  if (token !== secret) {
     return res.status(403).json({ error: "Unauthorized request" });
   }
 
@@ -38,7 +37,6 @@ const secret = process.env.SERVER_SECRET?.trim();
     });
 
     const text = await response.text();
-
     try {
       const json = JSON.parse(text);
       res.json(json);
@@ -46,9 +44,13 @@ const secret = process.env.SERVER_SECRET?.trim();
       res.send(text);
     }
   } catch (err) {
-    console.error(err);
+    console.error("❌ Proxy error:", err);
     res.status(500).json({ error: "Proxy failed" });
   }
 });
 
-app.listen(PORT, () => console.log(`✅ Secure proxy running on port ${PORT}`));
+// ❌ REMOVE this line:
+// app.listen(PORT, () => console.log(...));
+
+// ✅ ADD this instead:
+export default app;
