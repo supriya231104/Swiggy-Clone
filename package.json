@@ -8,11 +8,12 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-     "dev:all": "npx concurrently \"npm run server\" \"npm run dev\""
+    "dev:all": "npx concurrently \"npm run server\" \"npm run dev\""
   },
   "dependencies": {
     "@flaticon/flaticon-uicons": "^3.3.1",
     "@reduxjs/toolkit": "^2.9.0",
+    "axios": "^1.13.1",
     "express": "^5.1.0",
     "firebase": "^12.3.0",
     "node-fetch": "^3.3.2",
