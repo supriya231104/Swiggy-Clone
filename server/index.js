@@ -70,5 +70,13 @@ app.get("/api/proxy", async (req, res) => {
   }
 });
 
-// ✅ Required for Vercel serverless function
+// ✅ Run locally (but skip on Vercel)
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running locally on http://localhost:${PORT}`);
+  });
+}
+
+// ✅ Export for Vercel serverless deployment
 export default app;
