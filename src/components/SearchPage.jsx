@@ -72,7 +72,6 @@ function SearchPage() {
 
     const response = await fetch(`/api/proxy?url=${encodedUrl}&token=${token}`);
     const result = await response.json();
-    
 
     setSelectedRes(result?.data?.cards[1]?.card);
     // console.log(result?.data?.cards[2]?.card?.card?.cards)
@@ -82,7 +81,7 @@ function SearchPage() {
   async function fetchDishes() {
     const encodedUrl = encodeURIComponent(
       `https://www.swiggy.com/dapi/restaurants/search/v3?lat=${lat}&lng=${lng}&str=${searchQuery}&trackingId=undefined&submitAction=ENTER&queryUniqueId=2afa537a-15f6-cec1-d95b-c48426726822`
-    )
+    );
     const token = import.meta.env.VITE_APP_SECRET;
     const response = await fetch(`/api/proxy?url=${encodedUrl}&token=${token}`);
     const result = await response.json();
@@ -133,19 +132,26 @@ function SearchPage() {
   useEffect(() => {
     fetchDishes();
     fetchRestaurantData();
-    fetchDishesFromSameRes()
+    fetchDishesFromSameRes();
   }, [searchQuery, lat, lng]);
 
   return (
     <div className="w-[55%] first:w-[75%] betFirstAndSecond:w-[80%] second:w-[95%] mx-auto pt-5  flex flex-col gap-5 items-center ">
       <div className="flex w-full items-center border border-black/60 px-3  py-2 mt-5 gap-2">
-        <Link to={'/search'}><i className="fa-solid fa-angle-up -rotate-90 text-black/70"></i></Link>
+        <Link to={"/search"}>
+          <i className="fa-solid fa-angle-up -rotate-90 text-black/70"></i>
+        </Link>
         <input
-          onInput={handleSearchQuery}
-          className="w-full focus:outline-none   "
+          value={searchQuery}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSerachQuery(val);
+          }}
+          className="w-full focus:outline-none"
           type="text"
           placeholder="Search for restaurants and food"
         />
+
         <i className="fi-br-search text-black/70"></i>
       </div>
 
@@ -194,9 +200,10 @@ function SearchPage() {
       <div
         className={
           ` min-h-screen border  px-3 py-5 bg-[#f3f4f68d] w-full   ` +
-          (toShowSimilarDishes ? "" : " grid grid-cols-2 gap-x-4 gap-y-4 fourth:grid-cols-1  ")+(
-            !isActive?"grid grid-cols-2 gap-y-4  ":''
-          )
+          (toShowSimilarDishes
+            ? ""
+            : " grid grid-cols-2 gap-x-4 gap-y-4 fourth:grid-cols-1  ") +
+          (!isActive ? "grid grid-cols-2 gap-y-4  " : "")
         }
       >
         {toShowSimilarDishes ? (
@@ -208,14 +215,14 @@ function SearchPage() {
           </div>
         ) : isActive ? (
           dishes &&
-          dishes.map((one,i) => {
+          dishes.map((one, i) => {
             return <DishCard key={i} data={one}></DishCard>;
           })
         ) : (
           restaurants &&
-          restaurants.map((one,i) => {
+          restaurants.map((one, i) => {
             return one?.promoted ? (
-              <PromotedRes data={one} ></PromotedRes>
+              <PromotedRes data={one}></PromotedRes>
             ) : (
               <RestaurantCard data={one} key={i}></RestaurantCard>
             );
