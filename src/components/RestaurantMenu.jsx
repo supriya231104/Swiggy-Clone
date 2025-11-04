@@ -57,27 +57,27 @@ function RestaurantMenu() {
       let tempTopPicks = [];
       let tempSubCards = [];
 
-      data.map((one) => {
+      data?.map((one) => {
         if (one?.card?.card?.info) {
           tempRestaurantInfo = one.card.card.info;
         }
       });
       // console.log(tempRestaurantInfo);
       setRestaurantInfo(tempRestaurantInfo);
-      data.map((one) => {
+      data?.map((one) => {
         if (one?.card?.card?.gridElements?.infoWithStyle?.offers) {
           tempOffers = one?.card?.card?.gridElements?.infoWithStyle?.offers;
         }
       });
       // console.log(tempOffers);
       setDeal(tempOffers);
-      data.map((one) => {
+      data?.map((one) => {
         if (one.groupedCard) {
           tempMenu = one.groupedCard.cardGroupMap.REGULAR.cards;
         }
       });
       // console.log(tempMenu);
-      tempMenu.map((one) => {
+      tempMenu?.map((one) => {
         if (one?.card?.card?.title === "Top Picks") {
           tempTopPicks = one.card.card.carousel;
         }
@@ -85,7 +85,7 @@ function RestaurantMenu() {
       // console.log(tempTopPicks);
       setTopPicks(tempTopPicks);
 
-      tempMenu.map((one) => {
+      tempMenu?.map((one) => {
         if (one?.card?.card?.title && one.card.card.title !== "Top Picks") {
           tempSubCards.push(one);
         }
@@ -180,7 +180,7 @@ function RestaurantMenu() {
             <div className="bg-black/5 w-full h-[15px] mt-2"></div>
 
             {/* cards of menu  */}
-            {menuData.map(({ card: { card: one } }, i) => {
+            {menuData?.map(({ card: { card: one } }, i) => {
               return (
                 <>
                   <MenuCard
