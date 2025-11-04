@@ -141,7 +141,7 @@ function SearchPage() {
       <div className="flex w-full items-center border border-black/60 px-3  py-2 mt-5 gap-2">
         <Link to={'/search'}><i className="fa-solid fa-angle-up -rotate-90 text-black/70"></i></Link>
         <input
-          onKeyDown={handleSearchQuery}
+          onInput={handleSearchQuery}
           className="w-full focus:outline-none   "
           type="text"
           placeholder="Search for restaurants and food"
